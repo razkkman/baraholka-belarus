@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f5f7">
+  <title>Барахолка — б/у вещи в Беларуси</title>
+  <meta name="description" content="Покупайте и продавайте б/у вещи в Беларуси: электроника, мебель, одежда, авто и многое другое.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%231d1d1f'/><path d='M20 22a4 4 0 0 1 4-4h11.3a4 4 0 0 1 2.83 1.17l10.7 10.7a4 4 0 0 1 0 5.66l-9.3 9.3a4 4 0 0 1-5.66 0l-10.7-10.7A4 4 0 0 1 22 31.3V22z' fill='none' stroke='%23ffffff' stroke-width='3.5'/><circle cx='28.5' cy='26.5' r='2.5' fill='%23ffffff'/></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <a class="logo" href="#" id="logoBtn" title="На главную">
+        <span class="logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/>
+            <circle cx="7.5" cy="7.5" r="1.25" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>
+        <span class="logo-text">Барахолка<small>Беларусь</small></span>
+      </a>
+
+      <div class="search-box">
+        <span class="search-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7.5"/>
+            <path d="m20.5 20.5-4.2-4.2"/>
+          </svg>
+        </span>
+        <input id="searchInput" type="search" placeholder="Поиск вещей, например iPhone или диван" autocomplete="off">
+        <button class="search-clear" id="searchClear" type="button" title="Очистить поиск" aria-label="Очистить поиск" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M18 6 6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="header-actions">
+        <button class="icon-btn" id="favoritesBtn" type="button" title="Избранное" aria-label="Избранное">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+          </svg>
+          <span class="badge" id="favCount" hidden>0</span>
+        </button>
+        <button class="btn btn-primary" id="addBtn" type="button">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+          <span class="full-text">Подать объявление</span>
+          <span class="short-text">Продать</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" aria-label="Обзор">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <h1 class="hero-title">Барахолка. <span>Вещи с новой историей.</span></h1>
+      </div>
+      <div class="hero-meta">
+        <span class="hero-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          Вся Беларусь
+        </span>
+        <span class="hero-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+          Без комиссий
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <nav class="categories" aria-label="Категории">
+    <div class="categories-inner" id="categoriesRow"></div>
+  </nav>
+
+  <main class="layout">
+    <aside class="filters" id="filtersPanel" aria-label="Фильтры">
+      <div class="filters-head">
+        <h2>Фильтры</h2>
+        <button class="link-btn" id="resetFilters" type="button">Сбросить</button>
+      </div>
+
+      <div class="filter-group">
+        <label for="priceMin">Цена, Br</label>
+        <div class="price-inputs">
+          <input type="number" id="priceMin" placeholder="От" min="0" inputmode="numeric">
+          <span class="price-dash">—</span>
+          <input type="number" id="priceMax" placeholder="До" min="0" inputmode="numeric">
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label id="conditionLabel">Состояние</label>
+        <div class="segmented" id="conditionFilter" role="radiogroup" aria-labelledby="conditionLabel">
+          <button type="button" class="segmented-btn active" data-value="all" role="radio" aria-checked="true">Любое</button>
+          <button type="button" class="segmented-btn" data-value="used" role="radio" aria-checked="false">Б/у</button>
+          <button type="button" class="segmented-btn" data-value="new" role="radio" aria-checked="false">Новое</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label for="cityFilter">Город</label>
+        <select id="cityFilter">
+          <option value="all">Вся Беларусь</option>
+        </select>
+      </div>
+
+      <div class="promo-card">
+        <div class="promo-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+          </svg>
+        </div>
+        <h3>Продай ненужное</h3>
+        <p>Освободи пространство дома — размещение объявлений всегда бесплатное.</p>
+        <button class="btn btn-primary btn-block" id="promoAddBtn" type="button">Подать объявление</button>
+      </div>
+    </aside>
+
+    <section class="content">
+      <div class="toolbar">
+        <button class="btn btn-ghost filters-toggle" id="filtersToggle" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" x2="20" y1="21" y2="21"/>
+            <line x1="4" x2="20" y1="14" y2="14"/>
+            <line x1="4" x2="20" y1="7" y2="7"/>
+            <circle cx="9" cy="7" r="2" fill="currentColor"/>
+            <circle cx="15" cy="14" r="2" fill="currentColor"/>
+            <circle cx="10" cy="21" r="2" fill="currentColor"/>
+          </svg>
+          Фильтры
+        </button>
+        <div class="results-wrap">
+          <span class="results-count" id="resultsCount"></span>
+          <span class="fav-mode-chip" id="favModeChip" hidden>
+            Избранное
+            <button type="button" id="exitFavBtn" title="Показать все объявления" aria-label="Показать все объявления">×</button>
+          </span>
+        </div>
+        <select id="sortSelect" class="sort-select" aria-label="Сортировка">
+          <option value="newest">Сначала новые</option>
+          <option value="price-asc">Сначала дешевле</option>
+          <option value="price-desc">Сначала дороже</option>
+        </select>
+      </div>
+
+      <div class="grid" id="listingsGrid"></div>
+
+      <div class="empty" id="emptyState" hidden>
+        <div class="empty-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7.5"/>
+            <path d="m20.5 20.5-4.2-4.2"/>
+          </svg>
+        </div>
+        <h3 id="emptyTitle">Ничего не найдено</h3>
+        <p id="emptyText">Попробуйте изменить запрос или сбросить фильтры.</p>
+        <button class="btn btn-primary" id="emptyResetBtn" type="button">Сбросить фильтры</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span><strong>Барахолка</strong> — демо-прототип маркетплейса б/у вещей Беларуси.</span>
+      <span>Избранное и ваши объявления хранятся локально в этом браузере.</span>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="listingModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Объявление">
+      <button class="modal-close" data-close type="button" title="Закрыть" aria-label="Закрыть">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <div class="listing-detail" id="listingDetail"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="addModal" hidden>
+    <div class="modal modal-form" role="dialog" aria-modal="true" aria-label="Подать объявление">
+      <button class="modal-close" data-close type="button" title="Закрыть" aria-label="Закрыть">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <div class="modal-header">
+        <h2>Новое объявление</h2>
+        <p class="modal-subtitle">Заполните детали, и товар сразу появится в каталоге.</p>
+      </div>
+      <form id="addForm">
+        <div class="form-grid">
+          <div class="form-field full">
+            <label for="addTitle">Название *</label>
+            <input id="addTitle" name="title" type="text" required maxlength="80" placeholder="Например, iPhone 12 128GB">
+          </div>
+          <div class="form-field">
+            <label for="addCategory">Категория *</label>
+            <select id="addCategory" name="category" required></select>
+          </div>
+          <div class="form-field">
+            <label for="addPrice">Цена, Br *</label>
+            <input id="addPrice" name="price" type="number" required min="0" step="1" placeholder="0" inputmode="numeric">
+          </div>
+          <div class="form-field">
+            <label for="addCondition">Состояние *</label>
+            <select id="addCondition" name="condition" required>
+              <option value="used">Б/у</option>
+              <option value="new">Новое</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="addCity">Город *</label>
+            <select id="addCity" name="city" required></select>
+          </div>
+          <div class="form-field full">
+            <label for="addDescription">Описание *</label>
+            <textarea id="addDescription" name="description" required rows="4" maxlength="1500" placeholder="Расскажите о состоянии, комплектации и причине продажи…"></textarea>
+          </div>
+          <div class="form-field full">
+            <label>Фото</label>
+            <label class="photo-drop" id="photoPreview" for="photoInput">
+              <span class="photo-drop-prompt">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+                  <circle cx="12" cy="13" r="3"/>
+                </svg>
+                <span>Нажмите, чтобы добавить фото</span>
+              </span>
+            </label>
+            <input type="file" id="photoInput" accept="image/*" hidden>
+          </div>
+          <div class="form-field">
+            <label for="addName">Ваше имя *</label>
+            <input id="addName" name="name" type="text" required maxlength="40" placeholder="Как к вам обращаться">
+          </div>
+          <div class="form-field">
+            <label for="addPhone">Телефон *</label>
+            <input id="addPhone" name="phone" type="tel" required maxlength="25" placeholder="+375 (29) 000-00-00">
+          </div>
+          <div class="form-field full form-submit-row">
+            <button class="btn btn-primary btn-block btn-lg" type="submit">Опубликовать объявление</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
